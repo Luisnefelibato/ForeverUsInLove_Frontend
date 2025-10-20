@@ -641,8 +641,8 @@ This project is proprietary and confidential. Unauthorized copying, distribution
 ## 📞 Support
 
 For technical support or questions, contact the development team:
-- **Email**: dev@foreverusinlove.com
-- **Slack**: #foreverusinlove-dev
+- **Email**: luis.gomez@imagineapps.co
+
 
 ---
 
