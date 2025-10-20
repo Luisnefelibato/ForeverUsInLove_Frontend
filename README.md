@@ -634,7 +634,7 @@ This is a proprietary project. Contributions are limited to authorized team memb
 
 This project is proprietary and confidential. Unauthorized copying, distribution, or use is strictly prohibited.
 
-© 2024 ForeverUsInLove. All rights reserved.
+© 2025 ForeverUsInLove. All rights reserved.
 
 ---
 
@@ -650,7 +650,7 @@ For technical support or questions, contact the development team:
 
 - **Current Version**: 1.0.0
 - **Status**: 🚧 In Development (Architecture Setup Phase)
-- **Last Updated**: 2024
+- **Last Updated**: 2025
 - **Next Milestone**: UI/UX Approval & Implementation
 
 ---
