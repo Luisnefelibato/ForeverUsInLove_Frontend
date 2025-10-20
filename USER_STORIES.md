@@ -1,491 +1,650 @@
-# 📖 User Stories - Authentication Module
+# 📖 User Stories - ForeverUsInLove
 
-This document details all user stories for the Authentication Module based on the official requirements document.
-
----
-
-## Module: Auth
-
-### Priority Legend
-- 🔴 **High**: Critical features for MVP
-- 🟡 **Medium**: Important but not blocking
-- 🟢 **Low**: Nice to have
+## Module: Authentication (Auth)
 
 ---
 
-## HU_001_FE/BE: Elementos de identificación 🔴
+## HU_001: App Identification Elements
 
-### User Story
-**Como** usuario de la app  
-**Quiero** poder identificar dentro de mis aplicaciones a ForeverUSinlove  
-**Para** acceder rápidamente a la aplicación
+### 📋 User Story
+**As a user** of the app, I must be able to identify ForeverUSinlove within my applications.
+
+### Priority
+⭐⭐⭐ High
 
 ### Acceptance Criteria
 
 #### Happy Path
-1. ✅ La app debe mostrar el logo propio del proyecto
-   - Nota: Si el cliente cuenta con un favicon en una página web paralela, ambos logos deben ser sinérgicos
-2. ✅ El nombre de la aplicación debe ser visible e iniciar con letra capitular
-3. ✅ Se debe presentar una splash screen que transicione al usuario del icono a la app
-4. ✅ El usuario debe observar la pantalla de bienvenida con las opciones:
-   - Login
-   - Crear cuenta
-   - Cambiar contraseña
-5. ✅ Se debe pedir acceso a los siguientes permisos:
-   - Notificaciones
-   - Cámara
-   - Ubicación
+
+1. **Splash Screen Display**
+   - App displays custom logo on launch
+   - Logo must be synergistic with favicon (if parallel website exists)
+   - Application name is visible and starts with capital letter
+   - Smooth transition from splash screen to welcome screen
+
+2. **Welcome Screen**
+   - User sees welcome screen with options:
+     - Login
+     - Create Account
+     - Change Password
+
+3. **Permission Requests**
+   - App requests access to:
+     - ✅ Notifications
+     - ✅ Camera
+     - ✅ Location
 
 #### Design Details
-- La splash screen debe ser responsive ante distintos tipos de celular
-- Transición limpia sin cambios de tamaño o proporción
-- La app no debe permitir la rotación de la pantalla nativa del celular
-
-#### Error Handling
-- **Sin permisos de notificaciones**: "Verifica tus permisos"
-- **Sin permisos de cámara**: Mensaje al intentar FaceID o subir fotos
-- **Sin permisos de ubicación**: Inhabilitar filtro por zona ft o km
-- **Sin conexión desde splash**: "¡Ups! Something was wrong. Check your conexión."
-
----
-
-## HU_002_FE/BE: Crear cuenta 🔴
-
-### User Story
-**Como** usuario de la app  
-**Quiero** registrarme en la plataforma  
-**Para** poder acceder a todas las funcionalidades del marketplace
-
-### Acceptance Criteria
-
-#### Step 1: Información Personal
-
-**Progress Bar**: Posición 1
-
-**Campos del formulario**:
-
-| Campo | Tipo | Validación | Max Length |
-|-------|------|------------|------------|
-| Nombre(s) | Alfanumérico | Requerido | 25 caracteres |
-| Apellido(s) | Alfanumérico | Requerido | 25 caracteres |
-| Número de celular | Numérico | Requerido, 10 dígitos | 10 caracteres |
-| Correo | Email | Requerido, formato válido | 100 caracteres |
-| Fecha de nacimiento | Fecha | Requerido, 18+ años | 8 caracteres |
-| Género | Radio button | Requerido | - |
-| Intereses | Radio button | Requerido | - |
-| Contraseña | Alfanumérico | Requerido, 8+ chars | 25 caracteres |
-| Confirmar contraseña | Alfanumérico | Debe coincidir | 25 caracteres |
-
-**Opciones de Género**: Man, Woman, No Binari  
-**Opciones de Intereses**: Man, Woman, Man and Woman
-
-**Características adicionales**:
-- ✅ Botón de "ojito" para ocultar/desocultar contraseñas
-- ✅ Checkbox para aceptar términos y condiciones y políticas de tratamiento de datos
-- ✅ Enlaces a "términos y condiciones de uso" y "políticas de tratamiento de datos"
-- ✅ Botón "Continuar" se habilita cuando todos los campos están completos
-- ✅ Mensaje informativo sobre requisitos de contraseña:
-  - "La contraseña debe tener al menos 8 caracteres incluyendo una mayúscula, una minúscula y un número"
-  - **Nota**: No se requieren caracteres especiales (especialmente útil para personas de edad avanzada)
-
-#### Step 2: Verificación OTP
-
-**Progress Bar**: Posición 2
-
-**Campos del formulario**:
-
-| Campo | Tipo | Validación | Length |
-|-------|------|------------|--------|
-| Código de verificación | Numérico | Requerido | 4 caracteres |
-
-**Comportamiento**:
-- ✅ El usuario recibe código por SMS/Email
-- ✅ Formato del mensaje: "¡Hola! Tu código de verificación en ForeverUSinlove es: 1234"
-- ✅ Código expira en 10 minutos
-- ✅ Botón "Reenviar código" se activa después de 30 segundos
-- ✅ Mensaje de cuenta regresiva: "Podrás reenviar el código en 30 s."
-- ✅ Mensaje de éxito al reenviar:
-  - SMS: "Te hemos enviado un nuevo código de validación por SMS/OTP"
-  - Email: "Te hemos enviado un nuevo correo de validación"
-- ✅ Si validación exitosa → Activar botón "Crear cuenta"
-- ✅ Al crear cuenta exitosamente → Redirigir al home
-
-**Nota importante**: Si el usuario abandona el proceso en este paso, deberá reiniciar desde cero ya que la cuenta no se creó.
-
-#### Design Details
-- Botón se activa solo cuando campos obligatorios estén completos
-- Contraseña con icono para ocultar/desocultar
-- Mensajes de error en rojo debajo de cada campo
-- Mensajes de éxito en verde
-- Diseño responsive para dispositivos móviles
-- Campos de texto con límite visual establecido
-- Botón "Crear cuenta" debe tener color que resalte
+- Connection error message when no internet
+- Splash screen must be responsive across different device sizes
+- Clean transition without size or proportion changes
+- Screen rotation is locked (portrait only)
 
 #### Error Handling
 
-| Condición | Mensaje |
-|-----------|---------|
-| Menor de 18 años | "Se requiere ser mayor de 18 años" |
-| Campo vacío | "Este campo es obligatorio" |
-| Número inválido (formato o extensión) | "El número no es válido" |
-| Email inválido | "El correo no es válido" |
-| Código incorrecto/incompleto | "El código no es válido" |
-| Error al crear cuenta | "¡Ups! Se presentó un error al realizar esta acción, inténtalo de nuevo" |
-| Error al enviar código | "Hubo un error al enviar tu código de verificación. Por favor, inténtalo más tarde" |
-| Número ya registrado | "El número ya se encuentra registrado" (Solo si finalizó proceso OTP) |
-| Código expirado | "El código ha expirado. Inténtalo de nuevo" |
-| Contraseña no cumple requisitos | Resaltar requisitos en rojo |
-| Contraseñas no coinciden | "Las contraseñas no coinciden" |
+1. **Permission Denied**
+   - **Notifications screen**: "Verifica tus permisos."
+   - **Camera screen**: Request permissions when accessing FaceID or gallery upload
+   - **Location screen**: Disable zone filter (ft or km)
 
-**Notas adicionales**:
-- Todo popup debe tener opción de cerrarse con X
-- Campos numéricos no deben permitir comas, puntos o guiones (especialmente Android)
-- Usuario con cuenta eliminada debe poder crear cuenta nueva con mismo número
+2. **No Internet Connection**
+   - If check starts from splash screen
+   - Message: "¡Ups! Something was wrong. Check your conexión."
+
+3. **Screen Orientation**
+   - App must not allow native phone rotation
 
 ---
 
-## HU_003_BE/FE: Verificar identidad 🔴
+## HU_002: Create Account
 
-### User Story
-**Como** usuario de ForeverUSinlove  
-**Quiero** verificar mi identidad mediante reconocimiento facial (Face ID) y fotos de mi DNI por ambos lados  
-**Para** garantizar la autenticidad de mi cuenta y la seguridad dentro de la plataforma
+### 📋 User Story
+**As a user** of the app, I want to register on the platform to access all marketplace functionalities.
+
+### Priority
+⭐⭐⭐ High
 
 ### Acceptance Criteria
 
-#### Step 3: Face ID Verification
+#### Happy Path
 
-**Progress Bar**: Posición 3
+### **Step 1: Personal Information** (Progress: 1/6)
 
-**Características**:
-- ✅ Opción "Omitir" disponible con advertencia sobre repercusiones
-- ✅ Modal de confirmación con botones "Cancelar" y "Continuar"
-- ✅ Flujo guiado con cámara activa
-- ✅ Sistema captura automáticamente el rostro
-- ✅ Validación de coincidencias con datos del documento
-- ✅ Interfaz clara con progreso (1/3 Captura de rostro, 2/3 Frente del documento, 3/3 Reverso del documento)
-- ✅ Botones para repetir captura en caso de:
-  - Baja iluminación
-  - Desenfoque
-  - Movimiento excesivo
-- ✅ Marco ovalado o guía visual para posición correcta
-- ✅ Mensajes de éxito/error
-- ✅ Botón "Continuar" activado cuando FaceID es correcto
+**Form Fields:**
 
-#### Step 4: ID Verification
+| Field | Type | Length | Options | Required |
+|-------|------|--------|---------|----------|
+| Name(s) | Alphanumeric | Max 25 chars | - | ✅ |
+| Surname(s) | Alphanumeric | Max 25 chars | - | ✅ |
+| Phone Number | Numeric | Max 10 chars | Colombian format | ✅ |
+| Email | Email | Max 100 chars | Valid email | ✅ |
+| Date of Birth | Date | Max 8 chars | DD/MM/YYYY | ✅ |
+| Gender | Radio | - | Man, Woman, No Binari | ✅ |
+| Interests | Radio | - | Man, Woman, Man and Woman | ✅ |
+| Password | Alphanumeric | Max 25 chars | - | ✅ |
+| Confirm Password | Alphanumeric | Max 25 chars | Must match | ✅ |
 
-**Características**:
-- ✅ Opción "Omitir" disponible con advertencia
-- ✅ Subida o captura en tiempo real de fotos DNI (anverso y reverso)
-- ✅ Validaciones automáticas:
-  - Nitidez
-  - Tamaño
-  - Orientación
-- ✅ Bloqueo de avance si:
-  - No se detecta rostro humano
-  - Fotos no cumplen parámetros de legibilidad
-- ✅ Iconografía diferenciada para Face ID vs Fotos DNI
-- ✅ Alertas si:
-  - Usuario sube dos veces la misma imagen
-  - Interrumpe cámara durante proceso
-- ✅ Manejo de errores de cámara con flujo de reintento
-- ✅ Validación de datos DNI vs cuenta registrada
-- ✅ Envío seguro por HTTPS (sin almacenamiento local sin cifrar)
-- ✅ Botón "Continuar" activado cuando verificación es correcta
+**Additional Requirements:**
+- Password toggle visibility (eye icon)
+- All fields are mandatory
+- "Continue" button enabled when all fields complete
+- Links to "Terms and Conditions" and "Privacy Policy"
+- Checkbox for terms acceptance (required)
 
-#### Design Details
-- Loader durante verificación de rostro o DNI
-- Opción de previsualización de imagen
-- Opción de tomar nueva captura/foto
-- Mensajes de éxito y error generalizados
-
-#### Error Handling - Face ID
-
-| Error | Descripción |
-|-------|-------------|
-| Conexión | Fallo de conexión o tiempo de espera agotado |
-| Detección rostro | No se reconoce cara humana o está fuera del marco |
-| Coincidencia | Baja similitud entre rostro capturado y foto DNI |
-
-#### Error Handling - ID Verification
-
-| Error | Descripción |
-|-------|-------------|
-| Foto borrosa | Poca iluminación o movimiento durante captura |
-| Documento ilegible | Reflejos, enfoque incorrecto, baja resolución |
-| Foto mal encuadrada | Invertida, cortada o texto fuera del encuadre |
-| Subida duplicada | Usuario carga dos veces el mismo lado del DNI |
-| Formato no soportado | Archivo no permitido o tamaño excesivo |
-| Error servidor | Problema al procesar o validar imágenes |
-| Lectura fallida | No se pueden leer datos del DNI automáticamente |
-| Desincronización | Usuario avanza sin completar paso anterior |
-| Interrupción proceso | Cierre accidental o pérdida de conexión |
-| Error biométrico | Diferencias por expresión o accesorios (gafas, barba) |
-| Timeout validación | Tiempo excesivo genera abandono |
-| Bloqueo interfaz | Fallo al cambiar de cámara (frontal/trasera) |
-| Orientación | Desalineación de rostro o documento |
-| Servicio externo | Error en validación o reconocimiento facial |
-| Documento diferente | Usuario intenta verificar con documento no registrado |
-| Fallo seguridad | Error en cifrado o envío HTTPS |
+**Password Requirements:**
+- Minimum 8 characters
+- At least one uppercase letter
+- At least one lowercase letter
+- At least one number
+- No special characters required (for elderly accessibility)
 
 ---
 
-## HU_004_BE/FE: Subir imágenes 🔴
+### **Step 2: OTP Verification** (Progress: 2/6)
 
-### User Story
-**Como** usuario de la app  
-**Quiero** poder subir imágenes al crear mi perfil que sean validadas por los sistemas de verificación de identidad
+**Requirements:**
 
-### Acceptance Criteria
+1. **Code Delivery**
+   - User receives 4-digit code via SMS/OTP to registered phone
+   - Code sent to registered email (alternative)
+   - Code valid for 10 minutes
+   - Message template: "¡Hola! Tu código de verificación en ForeverUSinlove es: {code}"
 
-#### Omisión de verificación
+2. **Code Input**
+   - Form field: Numeric, 4 characters
+   - "Resend Code" button available after 30 seconds
+   - Countdown timer: "Podrás reenviar el código en 30 s."
 
-**Progress Bar**: Posición 4
+3. **Code Resend**
+   - SMS success message: "Te hemos enviado un nuevo código de validación por SMS/OTP"
+   - Email success message: "Te hemos enviado un nuevo correo de validación"
+   - Only most recent code is valid
 
-Si el usuario omitió verificación de identidad:
-- ✅ Mensaje de alerta indicando necesidad de verificar identidad para subir fotos
-- ✅ Modal con botones "Cancelar" y regresar a verificación
-- ✅ Si cancela → Enviar a encuesta de personalidad
+4. **Success**
+   - If validation successful, enable "Create Account" button
+   - User redirected to ForeverUSinlove home
+   - Success confirmation message
 
-#### Subir imagen
+**Important Notes:**
+- If user abandons process at this step, they must restart from Step 1
+- Account is not created until OTP verification completes
 
-**Requisitos**:
-- ✅ Mínimo 2 imágenes, máximo 6 imágenes
-- ✅ Formatos: .jpg, .jpeg, .png, .webp
-- ✅ Tamaño máximo: 5 MB por imagen
-- ✅ Sistema compara fotos con recurso FaceID para verificar identidad
-- ✅ Vista previa de cada imagen antes de guardar
-- ✅ Opción para eliminar imagen cargada
-- ✅ Orden de carga (primera = imagen principal)
-- ✅ Confirmación visual al cargar exitosamente
-- ✅ Previsualización con opción de reordenar (drag & drop o flechas)
-- ✅ Impedir avance si no hay al menos 2 imágenes verificadas
+---
+
+### **Step 3: Face ID Verification** (Progress: 3/6) - OPTIONAL
+
+**Requirements:**
+
+1. **Skip Option**
+   - "Skip" button available
+   - Warning modal about consequences of skipping
+   - Modal buttons: "Cancel", "Continue"
+
+2. **Face Capture Process**
+   - Guided flow with active camera
+   - Automatic face capture
+   - System validates match with document data
+   - Clear progress indicator: "1/3 Capture face"
+
+3. **Capture Guidelines**
+   - Maintain camera centered on user's face
+   - Oval or guide frame for correct positioning
+   - Retry option for poor lighting, blur, or excessive movement
+
+4. **Feedback**
+   - Success/error messages inform operation status
+   - "Continue" option enabled when Face ID correct
+
+**Technical Validations:**
+- Face detection (human face recognized)
+- Frame alignment (face within guide)
+- Image quality (lighting, focus, movement)
+
+---
+
+### **Step 4: Document Verification** (Progress: 4/6) - OPTIONAL
+
+**Requirements:**
+
+1. **Skip Option**
+   - "Skip" button available
+   - Warning modal about verification consequences
+   - Modal buttons: "Cancel", "Continue"
+
+2. **Document Upload**
+   - Upload or real-time capture of ID photos (front & back)
+   - Automatic validations: clarity, size, orientation
+   - Progress indicator: "2/3 Front of document", "3/3 Back of document"
+
+3. **Validations**
+   - Block progress if no human face detected
+   - Block if photos don't meet minimum legibility
+   - Prevent duplicate side uploads
+   - Verify data matches account registration
+
+4. **User Experience**
+   - Neutral colors and short empathetic error messages
+   - Clear iconography differentiating Face ID from document steps
+   - Alert for interruptions during camera capture
+
+5. **Security**
+   - Register and handle camera errors (permissions denied, unavailable, timeout)
+   - Alternative flow for retry or support contact
+   - No local image storage without encryption
+   - All captures sent via secure channel (HTTPS)
+
+6. **Feedback**
+   - Success/error messages
+   - "Continue" enabled when ID verification correct
+   - Image preview option
+   - Retake capture/photo option
+
+---
+
+### **Step 5: Upload Images** (Progress: 5/6)
+
+**Requirements:**
+
+1. **Verification Skip Consequence**
+   - If user skipped identity verification
+   - Alert message: Must verify identity to upload photos
+   - Modal options: Cancel or return to identity verification
+   - Cancel redirects to personality survey
+
+2. **Image Upload**
+   - Minimum: 2 images
+   - Maximum: 6 images
+   - Simultaneous upload supported
+   - Accepted formats: .jpg, .jpeg, .png, .webp
+   - Max size: 5 MB per image
+
+3. **Validations**
+   - Compare uploaded photos with FaceID resource
+   - Verify identity match
+   - Block progression with less than 2 verified images
+
+4. **User Interface**
+   - Preview each loaded image before saving
+   - Delete option for loaded images
+   - Maintain loading order (first = main image)
+   - Drag & drop or arrow reordering
+   - Visual confirmation on successful/failed upload
+
+---
+
+### **Step 6: Personality Onboarding** (Progress: 6/6)
+
+**Requirements:**
+
+1. **Survey Introduction**
+   - Dedicated screen with title, description, total questions
+   - Skip option (page 1) with warning about reduced synergy
+   - Modal buttons: "Cancel", "Continue"
+
+2. **Survey Flow**
+   - Progress bar updates as user advances
+   - Questions in logical order
+   - Visible "Next" and "Previous" buttons
+   - Various field types:
+     - Free text
+     - Numeric
+     - Multiple choice (checkbox)
+     - Single choice (radio)
+     - Dropdown lists
+
+3. **Data Management**
+   - Validate mandatory questions before advancing
+   - Real-time progress save (prevent data loss)
+   - Summary screen showing all answers
+   - "Finish Onboarding" option when all mandatory data complete
+
+4. **Completion**
+   - Success message on correct process
+   - Redirect to home
+
+---
 
 #### Design Details
-- Área visible con botón "Subir imágenes"
-- Opción arrastrar y soltar archivos
-- Indicador de progreso durante carga
-- Permitir reordenar imágenes arrastrándolas
-- Íconos claros para eliminar/reemplazar
-- Layout en rejilla (grid) para hasta 4 imágenes en miniaturas
-- Resaltar imagen principal
-- Diseño responsive móvil/escritorio
+
+**General:**
+- Button activates when mandatory fields complete
+- Password visibility toggle icon
+- Red error messages below fields, green success messages
+- Responsive design for mobile devices
+- Field text design matches length limits
+- Action button prominently colored (especially for elderly users)
+
+**Character Limits:**
+- Display character limit on text fields
+- Real-time counter display
+
+**Validation Messages:**
+- Clear, specific error messages
+- Confirmation messages for successful actions
+
+---
 
 #### Error Handling
 
-| Condición | Mensaje |
-|-----------|---------|
-| Formato no permitido | "Formato no permitido. Solo se aceptan .jpg, .jpeg, .png y .webp" |
-| Tamaño excedido | "El archivo excede el peso máximo permitido (5 MB)" |
-| Más de 6 imágenes | "Solo se pueden subir hasta 6 imágenes" |
-| No pasa verificación FaceID | Alerta específica |
-| Pérdida de conexión | Mensaje de error y opción de reintentar |
-| Sin imágenes cargadas | "Debes cargar al menos dos imagenes" |
+**Step 1: Personal Information**
+
+| Error | Message |
+|-------|---------|
+| Empty field | "Este campo es obligatorio." |
+| Under 18 years | "Se requiere ser mayor de 18 años." |
+| Invalid phone format | "El número no es válido." |
+| Invalid email format | "El correo no es válido." |
+| Password mismatch | "Las contraseñas no coinciden." |
+| Weak password | Password requirements text in red |
+| Phone already registered | "El número ya se encuentra registrado"* |
+| Account creation error | "¡Ups! Se presentó un error al realizar esta acción, inténtalo de nuevo." |
+
+*Note: If user didn't complete OTP, phone should not be considered registered
+
+**Step 2: OTP Verification**
+
+| Error | Message |
+|-------|---------|
+| Incorrect/incomplete code | "El código no es válido" |
+| Expired code | "El código ha expirado. Inténtalo de nuevo." |
+| Send error | "Hubo un error al enviar tu código de verificación. Por favor, inténtalo más tarde." |
+| Invalid code | "Código inválido" |
+
+**Step 3 & 4: Identity Verification**
+
+**Face ID Errors:**
+- Connection failure or timeout
+- Face detection failed (no human face or out of frame)
+- Failed match between captured face and ID photo (low similarity)
+
+**Document Upload Errors:**
+- Blurry photo, poor lighting, movement
+- Illegible document (reflections, incorrect focus, low resolution)
+- Inverted, cropped, or text outside frame
+- Duplicate upload of same side
+- Unsupported file format or size too large
+- Server processing/validation error
+- Failed automatic data reading (name, number, birth date)
+- Flow desynchronization (user advances without completing step)
+- Process interruption (app closure, connection loss)
+- Biometric comparison error (expression/accessory differences)
+- Excessive validation time causing user abandonment
+- Visual component loading failure or interface block
+- Device orientation issues misaligning face/document
+- External validation service communication error
+- User attempts verification with different document than registered
+- Security failure in encryption or sending if HTTPS not applied
+
+**Step 5: Image Upload**
+
+| Error | Message |
+|-------|---------|
+| Non-image file | "Formato no permitido. Solo se aceptan .jpg, .jpeg, .png y .webp". |
+| Oversized image (>5MB) | "El archivo excede el peso máximo permitido (5 MB)". |
+| More than 6 images | "Solo se pueden subir hasta 6 imágenes". |
+| Failed Face ID verification | Alert user |
+| Connection loss during upload | Error message with retry option |
+| Less than 2 images | "Debes cargar al menos dos imagenes". |
+
+**Step 6: Personality Survey**
+
+| Error | Solution |
+|-------|----------|
+| Network error during survey | Offer automatic recovery flow |
+| Invalid values in numeric fields | Alert user |
+| Character limit exceeded | Display error message |
+| Multiple submit attempts | Prevent duplicate submissions |
+| Server failure | Clear, empathetic error message |
+| Accidental exit | Exit confirmation to prevent data loss |
+| Data privacy | Send responses encrypted |
+| Device compatibility | Ensure visual/functional compatibility |
+
+**General Requirements:**
+- All popups must have close option (X button)
+- Numeric fields must not allow commas, periods, or hyphens (especially Android)
+- Deleted account users see same message as unregistered emails
 
 ---
 
-## HU_005_FE/BE: Onboarding Profile 🔴
+## HU_003: Identity Verification
 
-### User Story
-**Como** usuario de la app  
-**Debo** poder responder cuestionarios de personalidad con diferentes tipos de preguntas  
-**Para** que el sistema pueda analizar mis respuestas y ofrecerme resultados personalizados o coincidencias basadas en mi perfil
+### 📋 User Story
+**As a user** of ForeverUSinlove, I want to verify my identity through facial recognition (Face ID) and photos of my ID (both sides) to guarantee account authenticity and platform security.
 
-### Acceptance Criteria
+### Priority
+⭐⭐⭐ High
 
-**Progress Bar**: Posición 5
-
-**Características del cuestionario**:
-- ✅ Pantalla dedicada con título, descripción y número total de preguntas
-- ✅ Página 1: Opción de omitir con advertencia sobre disminución de sinergia para matchs
-- ✅ Modal con botones "Cancelar" y "Continuar"
-- ✅ Barra/indicador de progreso
-- ✅ Preguntas en orden lógico, una por una o por secciones
-- ✅ Botones visibles "Siguiente" y "Anterior"
-- ✅ Tipos de campos:
-  - Texto libre
-  - Numérico
-  - Opción múltiple (checkbox)
-  - Opción única (radio button)
-  - Listas desplegables (dropdown)
-- ✅ Validación de preguntas obligatorias
-- ✅ Guardado de progreso en tiempo real
-- ✅ Pantalla resumen con respuestas elegidas
-- ✅ Si todos los datos obligatorios completos → Opción de finalizar onboarding
-- ✅ Mensaje de éxito
-- ✅ Redirección al home
-
-#### Design Details
-- Mensajes claros de confirmación al finalizar
-- Elementos de entrada con suficiente tamaño táctil
-- Tipografía legible y contrastes adecuados
-- Permitir revisar y editar respuestas antes de enviar
-- Advertencias visuales si intenta avanzar sin responder obligatorias
-- Límite de caracteres en campos de texto
-
-#### Error Handling
-- Evitar bloqueos/reinicios por error de red (recuperación automática)
-- Alertar valores inválidos en campos numéricos
-- Mensajes de error para límite de caracteres
-- Prevenir envío múltiple (doble clic en botón envío)
-- Mensaje claro en caso de fallo servidor
-- Opción de salir con confirmación
-- Datos cifrados para privacidad
-- Compatibilidad con diferentes tamaños de pantalla y SO
+### Technical Requirements
+See Step 3 and Step 4 in HU_002 above.
 
 ---
 
-## HU_006_FE/BE: Iniciar sesión 🔴
+## HU_004: Upload Images
 
-### User Story
-**Como** un usuario registrado  
-**Quiero** poder iniciar sesión en la aplicación de manera fácil y segura  
-**Para** acceder a mi cuenta y gestionar mis datos
+### 📋 User Story
+**As a user** of the app, I want to upload images when creating my profile that are validated by identity verification systems.
 
-### Acceptance Criteria
+### Priority
+⭐⭐⭐ High
 
-**Opciones de inicio de sesión**:
-- ✅ Continue with phone number
-- ✅ Continue with email
-
-**Formulario según elección**:
-
-| Campo | Tipo | Validación | Max Length |
-|-------|------|------------|------------|
-| Número de celular / Correo | Celular o Email | Requerido | 10 (celular) / 100 (email) |
-| Contraseña | Alfanumérico | Requerido | 25 caracteres |
-
-**Características adicionales**:
-- ✅ Botón "ojito" para ocultar/desocultar contraseña
-- ✅ Todos los campos obligatorios
-- ✅ Botón habilitado cuando campos completos
-- ✅ Si credenciales correctas → Redirigir al home
-- ✅ Opciones de inicio con Google y Facebook
-- ✅ Si Google/Facebook y no tiene cuenta → Redirigir a Step 1 de registro
-- ✅ Checkbox "Recuérdame" para guardar información post registro
-
-#### Design Details
-- Diseño responsive móvil
-- Enlace "¿Olvidaste tu contraseña?" debajo del formulario
-- Enlace "Crear cuenta" si no tiene cuenta
-- Textos contenidos dentro de campos definidos
-
-#### Error Handling
-
-| Condición | Mensaje |
-|-----------|---------|
-| Campo vacío | "Este campo es obligatorio" |
-| Celular/contraseña incorrectos | "El número de celular y/o la contraseña no son válidos" |
-| OAuth no funcional | "¡Ups! Al parecer no se ha podido realizar esta acción. Intenta más tarde" |
-| "Recuérdame" falla | "¡Ups! No logramos acceder a tu cuenta. Inténtalo de nuevo más tarde o haz Log In nuevamente" |
-| Error acceso perfil | "¡Ups! Se presentó un error al realizar esta acción, inténtalo de nuevo" |
-
-**Notas**:
-- Mensaje de error aplica para números inválidos y no registrados (incluyendo usuarios que no finalizaron OTP)
-- Usuarios eliminados deben poder crear cuenta nueva e iniciar sesión
+### Technical Requirements
+See Step 5 in HU_002 above.
 
 ---
 
-## HU_007_FE/BE: Recuperar contraseña 🔴
+## HU_005: Personality Onboarding
 
-### User Story
-**Como** un usuario registrado  
-**Quiero** poder recuperar mi contraseña si la olvido  
-**Para** poder restablecer mi acceso a la aplicación
+### 📋 User Story
+**As a user** of the app, I must be able to answer personality questionnaires with different question types (text, number, multiple choice, single choice, dropdowns) so the system can analyze my responses and offer personalized results or matches based on my profile.
+
+### Priority
+⭐⭐⭐ High
+
+### Technical Requirements
+See Step 6 in HU_002 above.
+
+---
+
+## HU_006: Login
+
+### 📋 User Story
+**As a registered user**, I want to log in to the application easily and securely to access my account and manage my data.
+
+### Priority
+⭐⭐⭐ High
 
 ### Acceptance Criteria
 
-#### Paso 1: Identificación
+#### Happy Path
 
-Acceso desde "¿Olvidaste tu contraseña?" en login
+1. **Login Options**
+   - User accesses login screen via:
+     - "Continue with phone number"
+     - "Continue with email"
 
-**Campos**:
+2. **Login Form**
+   - Based on selection, display form with 2 mandatory fields:
+     - Phone Number / Email
+     - Password
 
-| Campo | Tipo | Validación | Max Length |
-|-------|------|------------|------------|
-| Número de celular / Correo | Celular o Email | Requerido | 10 (celular) / 100 (email) |
+**Field Specifications:**
 
-- ✅ Botón "Continuar" se habilita cuando campo completo
+| Field | Type | Length |
+|-------|------|--------|
+| Phone Number | Numeric | Max 10 chars (Colombian format) |
+| Email | Email | Max 100 chars |
+| Password | Alphanumeric | Max 25 chars |
 
-#### Paso 2: Verificación OTP
+3. **Password Visibility**
+   - Toggle password visibility with eye icon
 
-- ✅ Sistema valida que número/correo esté registrado
-- ✅ Envío de código de 4 dígitos
-- ✅ Mensaje indica que es de ForeverUSinlove
-- ✅ Código expira en 10 minutos
-- ✅ **Nota**: Usuarios sin proceso OTP completado = no registrado
+4. **Form Validation**
+   - All fields mandatory
+   - Action button enabled when fields complete
+   - If correct, user routed to ForeverUSinlove home
+   - User name displayed in account module
 
-#### Paso 3: Ingreso de código
+5. **Social Login Options**
+   - **Google Sign-In** option
+   - **Facebook Login** option
+   - Upon account selection, user routed to their session
+   - If no account exists, route to personal information (Step 1 of registration)
 
-- ✅ Campo para código de verificación
-- ✅ Si código correcto → Redirigir a pantalla nueva contraseña
-
-#### Paso 4: Nueva contraseña
-
-**Campos**:
-
-| Campo | Tipo | Validación | Max Length |
-|-------|------|------------|------------|
-| Contraseña | Alfanumérico | Requerido | 25 caracteres |
-| Confirmación contraseña | Alfanumérico | Debe coincidir | 25 caracteres |
-
-- ✅ Botón "ojito" para ocultar/desocultar
-- ✅ Botón "Restablecer contraseña" habilitado cuando campos completos
-- ✅ Mensaje de éxito: "Tu contraseña ha sido restablecida con éxito, ya puedes iniciar sesión nuevamente"
-- ✅ Botón "Iniciar sesión" → Redirige a login
-
-**Reenvío de código**:
-- ✅ Esperar 30 segundos para activar "Reenviar código"
-- ✅ Mensaje de éxito: "Te hemos enviado un nuevo código de validación por SMS"
-- ✅ Validar con código más reciente (anular anteriores)
+6. **Remember Me**
+   - Checkbox option to save login information post-registration
 
 #### Design Details
-- Diseño responsive móvil
-- Campos obligatorios, botón habilitado al completar
-- Mensaje informativo: "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un número"
+
+- Responsive mobile design
+- "Forgot your password?" link below form
+- "Create account" link for users without account
+- Text contained within defined fields
 
 #### Error Handling
 
-| Condición | Mensaje |
-|-----------|---------|
-| Campo vacío | "Este campo es obligatorio" |
-| Número inválido | "El número no es válido" |
-| Email inválido | "El correo no es válido" |
-| Número no registrado | "El Número no es válido" (incluye usuarios sin OTP completado) |
-| Email no registrado | "El correo no es válido" (incluye usuarios sin OTP completado) |
-| Error recuperación | "¡Ups! Se presentó un error al realizar esta acción, inténtalo de nuevo" |
-| Error envío código | "Se presentó un error al realizar esta acción, inténtalo de nuevo" |
-| Código expirado | "El código no es válido" |
-| Código incorrecto/incompleto | "El código no es válido" |
-| Contraseña no cumple requisitos | Resaltar requisitos en rojo |
-| Contraseñas no coinciden | "Las contraseñas no coinciden" |
+| Error | Message |
+|-------|---------|
+| Empty field | "Este campo es obligatorio". |
+| Invalid phone/password | "El número de celular y/o la contraseña no son válidos".* |
+| Google/Facebook login failure | "¡Ups! Al parecer no se ha podido realizar esta acción. Intenta más tarde." |
+| Auto-login with "Remember Me" fails | "¡Ups! No logramos acceder a tu cuenta. Inténtalo de nuevo más tarde o ha Log In nuevamente". |
+| Profile access error | "¡Ups! Se presentó un error al realizar esta acción, inténtalo de nuevo." |
 
-**Notas adicionales**:
-- Todo popup debe tener X para cerrar
-- Campos numéricos sin comas, puntos o guiones (especialmente Android)
-- Al recuperar contraseña, "Recuérdame" debe estar sin seleccionar
-- Si usuario pierde número de teléfono → Contactar administrador de ForeverUSinlove
+*Note: Message applies to invalid phones and unregistered phones (including users who didn't complete OTP)
+
+**Special Cases:**
+- Deleted users can create new account and login with same phone
+- Numeric fields must not allow commas, periods, or hyphens (especially Android)
+
+---
+
+## HU_007: Password Recovery
+
+### 📋 User Story
+**As a registered user**, I want to recover my password if I forget it to restore access to the application.
+
+### Priority
+⭐⭐⭐ High
+
+### Acceptance Criteria
+
+#### Happy Path
+
+**Access:**
+- From "Forgot your password?" link on login screen
+
+---
+
+### **Step 1: Identification**
+
+**Form Fields:**
+
+| Field | Type | Length |
+|-------|------|--------|
+| Phone Number | Numeric | Max 10 chars (Colombian format) |
+| Email | Email | Max 100 chars |
+
+- All fields mandatory
+- "Continue" button enabled when complete
+
+---
+
+### **Step 2: OTP Verification**
+
+1. **System Validation**
+   - Validate phone/email is registered
+   - Continue to code entry screen
+   - *Note: Users who didn't complete OTP registration treated as unregistered*
+
+2. **Code Delivery**
+   - 4-digit code sent to phone or email
+   - Message indicates ForeverUSinlove origin
+   - Code valid for 10 minutes
+
+3. **Code Entry**
+   - Input field for 4-digit code
+   - If correct, redirect to new password screen
+
+---
+
+### **Step 3: New Password**
+
+**Form Fields:**
+
+| Field | Type | Length |
+|-------|------|--------|
+| Password | Alphanumeric | Max 25 chars |
+| Confirm Password | Alphanumeric | Max 25 chars |
+
+**Requirements:**
+- Password visibility toggle (eye icon)
+- All fields mandatory
+- "Reset Password" button enabled when complete
+- Success message: "Tu contraseña ha sido restablecida con éxito, ya puedes iniciar sesión nuevamente."
+
+---
+
+### **Step 4: Return to Login**
+
+- Click "Log In" button
+- User redirected to login screen
+
+---
+
+#### Additional Features
+
+**Code Resend:**
+- Minimum 30-second wait for "Resend Code" button
+- Success message: "Te hemos enviado un nuevo código de validación por SMS"
+- Validate with most recent code only (invalidate previous)
+
+#### Design Details
+
+- Responsive mobile design
+- Button activates when all mandatory fields complete
+- Password requirements info message
+
+#### Error Handling
+
+| Error | Message |
+|-------|---------|
+| Empty field (phone/email/code/password) | "Este campo es obligatorio." |
+| Invalid phone format | "El número no es válido" |
+| Invalid email format | "El correo no es válido" |
+| Unregistered phone* | "El Número no es válido". |
+| Unregistered email* | "El correo no es válido". |
+| Password recovery error | "¡Ups!Se presentó un error al realizar esta acción, inténtalo de nuevo." |
+| Code send error | "Se presentó un error al realizar esta acción, inténtalo de nuevo." |
+| Expired code | "El código no es válido" |
+| Incorrect/incomplete code | "El código no es válido" |
+| Password doesn't meet requirements | Requirement text highlighted in red |
+| Passwords don't match | "Las contraseñas no coinciden." |
+
+*Note: Applies to users who didn't complete OTP registration
+
+**Special Cases:**
+- All popups must have close option (X button)
+- Numeric fields must not allow commas, periods, or hyphens (Android)
+- "Remember me" field unchecked after password recovery
+- Users who lose phone number must contact ForeverUSinlove administrator
 
 ---
 
 ## Summary
 
-Este módulo de autenticación incluye:
+### Module: Authentication (7 User Stories)
 
-- ✅ 7 historias de usuario completas
-- ✅ Proceso de registro de 6 pasos
-- ✅ Verificación de identidad con Face ID y DNI
-- ✅ Sistema de OTP con SMS/Email
-- ✅ Login tradicional + OAuth (Google/Facebook)
-- ✅ Recuperación de contraseña
-- ✅ Validaciones exhaustivas
-- ✅ Manejo completo de errores
-- ✅ UX optimizada para adultos mayores
+| ID | Name | Priority | Status |
+|----|------|----------|--------|
+| HU_001 | App Identification Elements | High | 📋 Documented |
+| HU_002 | Create Account | High | 📋 Documented |
+| HU_003 | Identity Verification | High | 📋 Documented |
+| HU_004 | Upload Images | High | 📋 Documented |
+| HU_005 | Personality Onboarding | High | 📋 Documented |
+| HU_006 | Login | High | 📋 Documented |
+| HU_007 | Password Recovery | High | 📋 Documented |
 
-**Estado**: 🚧 Pendiente de aprobación UI/UX
+---
 
-**Próximos pasos**: 
-1. Aprobación de diseños
-2. Implementación de pantallas
-3. Integración con backend
-4. Testing exhaustivo
+### Implementation Status
+
+- ✅ Architecture Defined
+- ✅ Documentation Complete
+- ⏳ UI/UX Design Pending Approval
+- ⏳ Implementation Pending
+- ⏳ Testing Pending
+- ⏳ Deployment Pending
+
+---
+
+## Next Steps
+
+1. **Design Phase**
+   - Create wireframes for all screens
+   - Design UI components
+   - Create design system
+   - Get stakeholder approval
+
+2. **Implementation Phase**
+   - Set up feature modules
+   - Implement BLoC for each flow
+   - Create UI screens
+   - Integrate with backend API
+   - Implement AWS services
+
+3. **Testing Phase**
+   - Unit tests for business logic
+   - Widget tests for UI
+   - Integration tests for flows
+   - User acceptance testing
+
+4. **Deployment**
+   - Beta testing
+   - Production deployment
+   - Monitoring and analytics
+
+---
+
+**Document Version:** 1.0  
+**Last Updated:** 2024  
+**Based On:** ForeverUSinlove Auth Module Specification PDF
