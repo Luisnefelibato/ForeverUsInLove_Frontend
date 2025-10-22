@@ -64,6 +64,9 @@ dependencies:
   intl: ^0.18.1
   logger: ^2.0.2+1
   connectivity_plus: ^5.0.1
+  
+  # Animations
+  smooth_page_indicator: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -85,12 +88,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   
-  # Assets placeholders (to be added later)
-  # assets:
-  #   - assets/images/
-  #   - assets/icons/
-  #   - assets/fonts/
-  #   - .env
+  # Assets
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
+    - .env
   
   # Fonts placeholders (to be added later)
   # fonts:

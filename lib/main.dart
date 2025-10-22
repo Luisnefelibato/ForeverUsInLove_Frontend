@@ -6,12 +6,20 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'core/config/app_config.dart';
 import 'core/di/injection.dart';
 import 'core/theme/app_theme.dart';
+import 'features/onboarding/presentation/pages/splash_page.dart';
+import 'features/onboarding/presentation/pages/intro_pages_v2.dart';
+import 'features/onboarding/presentation/pages/permissions_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   // Load environment variables
-  await dotenv.load(fileName: ".env");
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    // If .env file doesn't exist, continue without it
+    debugPrint('No .env file found, using defaults');
+  }
   
   // Configure dependency injection
   await configureDependencies();
@@ -38,15 +46,21 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      home: const PlaceholderScreen(),
+      themeMode: ThemeMode.light, // Force light theme for now
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashPage(),
+        '/intro': (context) => const IntroPagesScreenV2(),
+        '/permissions': (context) => const PermissionsPage(),
+        '/welcome': (context) => const WelcomeScreen(),
+      },
     );
   }
 }
 
-/// Placeholder screen until UI/UX is approved
-class PlaceholderScreen extends StatelessWidget {
-  const PlaceholderScreen({super.key});
+/// Welcome screen placeholder (after onboarding)
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,16 +83,17 @@ class PlaceholderScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Awaiting UI/UX Approval',
+              'Welcome! Onboarding Complete',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.grey[600],
                   ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 24),
             Text(
-              'v1.0.0',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[400],
+              'Next: Login/Register screens',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.grey[500],
+                    fontStyle: FontStyle.italic,
                   ),
             ),
           ],
